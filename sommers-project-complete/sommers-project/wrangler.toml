@@ -1,0 +1,56 @@
+# ============================================================================
+# Sommer's Proposal System - Cloudflare Workers Configuration
+# ============================================================================
+
+name = "sommers-api"
+main = "workers/api.ts"
+compatibility_date = "2024-01-01"
+
+# ============================================================================
+# ENVIRONMENTS
+# ============================================================================
+
+[env.production]
+route = "api.sommersealcoating.com/*"
+workers_dev = false
+
+[env.staging]
+route = "api-staging.sommersealcoating.com/*"
+workers_dev = false
+
+# ============================================================================
+# R2 STORAGE BINDINGS
+# ============================================================================
+
+[[r2_buckets]]
+binding = "PROPOSALS_BUCKET"
+bucket_name = "sommers-proposal-assets"
+preview_bucket_name = "sommers-proposal-assets-preview"
+
+# ============================================================================
+# SECRETS (set via wrangler secret put)
+# ============================================================================
+# SUPABASE_URL
+# SUPABASE_SERVICE_ROLE_KEY
+# RESEND_API_KEY
+# STRIPE_SECRET_KEY
+# STRIPE_WEBHOOK_SECRET
+# TWILIO_ACCOUNT_SID
+# TWILIO_AUTH_TOKEN
+# TWILIO_PHONE_NUMBER
+# OPENWEATHERMAP_API_KEY
+
+# ============================================================================
+# BUILD
+# ============================================================================
+
+[build]
+command = ""
+
+# ============================================================================
+# TRIGGERS
+# ============================================================================
+
+# Daily reminder check at 9am EST
+[triggers]
+crons = ["0 14 * * *"]
